@@ -245,7 +245,7 @@
     },
     "forceKill": {
       "title": "Termina sessione bloccata",
-      "message": "Sei sicuro di voler terminare forzatamente la sessione? \"{{name}}\"?",
+      "message": "Sei sicuro di voler terminare forzatamente la sessione \"{{name}}\"?",
       "warning": "Questa operazione terminerà forzatamente il processo del browser WhatsApp. Potrebbe essere necessario eseguire una nuova scansione della sessione al riavvio.",
       "confirm": "Termina sessione",
       "successTitle": "Sessione terminata",
