@@ -71,7 +71,7 @@
     "webhooks": "Webhook",
     "templates": "Modelli",
     "apiKeys": "Chiavi API",
-    "messageTester": "Tester Messaggi",
+    "messageTester": "Messaggio di prova",
     "infrastructure": "Infrastruttura",
     "plugins": "Plugin",
     "logs": "Log"
@@ -663,8 +663,7 @@
       "importFailed": "Impossibile importare i dati",
       "importOk": "Dati importati",
       "importConfirm": "L'importazione SOSTITUIRÀ tutti i dati attuali con il backup ({{rows}} righe). Questa operazione non può essere annullata. Continuare?",
-      "invalidFile": "Questo file non è un backup dati valido di OpenWA.",
-      "importTooLarge": "Il backup supera il limite della richiesta. Aumenta BODY_SIZE_LIMIT sul server e riprova."
+      "invalidFile": "Questo file non è un backup dati valido di OpenWA."
     }
   },
   "plugins": {
