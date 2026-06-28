@@ -7,8 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- External-S3 setups no longer silently fall back to local disk after upgrading: `docker-compose.yml` again forwards the legacy `S3_ACCESS_KEY` / `S3_SECRET_KEY` (alongside the canonical `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY`) so an existing `.env` keeps reaching the container, and the legacy names are blank-cleared so they can't shadow the dashboard config. (#488 follow-up)
+- The production default-secret guard no longer skips a weak credential for a host-pinned **external** datastore just because the built-in flag is set: the built-in exemption now requires both the `*_BUILTIN` flag **and** an internal host (`postgres` / `minio`), so an external Postgres/MinIO with a default password is still rejected in production. (#488 follow-up)
+- The Infrastructure page now shows an error + retry (instead of an editable form seeded from defaults) when the live `/infra/status` can't be loaded, so a save can no longer flip a running built-in database/Redis/storage to external+empty. (#488 follow-up)
+- `/infra/status` no longer blocks on the WhatsApp Web version registry fetch, and that fetch is rate-limited after a failure, so a firewalled/offline host no longer stalls up to 5s on every status poll and every session start/reconnect. (#488 follow-up)
+- A replayed `message.sent` WebSocket echo no longer downgrades a chat message already shown as delivered/read; the live-append path now applies the same forward-only delivery-status merge as the ack path. (#484 follow-up)
+
+## [0.7.7] - 2026-06-28
+
 ### Added
 
+- Dashboard **chat thread UX**: URLs in messages are now clickable links, WhatsApp text formatting (bold/italic/strikethrough/monospace) renders, images open in a photo lightbox, and the scroll position is remembered per chat. Thanks @softronicve. (#484)
 - The Infrastructure page now shows the actual **WhatsApp Web build** the whatsapp-web.js engine is using (e.g. `2.3000.1042251103-alpha`) and how it was chosen (pinned via `WWEBJS_WEB_VERSION`, auto-resolved, or native), surfaced via `/infra/status`. The engine card previously showed only the npm library version (`whatsapp-web.js 1.34.7`), which is unrelated to the WA Web build that actually governs connection stability. (#488)
 - Infrastructure data **backup & restore**: export all Data-DB tables to a JSON file and import them back, wired into the database-switch flow. When you change the database backend, the restart dialog now warns that the new database starts empty and offers a one-click backup before switching; a storage switch warns that existing media is not moved. (#488)
 - The Infrastructure page flags any database/redis/storage setting that is **pinned by an environment variable** (its running value differs from the saved config), so it's clear a dashboard change won't apply until that variable is unset, instead of the control silently having no effect. (#488)
